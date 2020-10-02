@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const corAtiva = Color(0xFF1D1E33);
+const corDoPe = Color(0xFFEB1555);
+
 void main() => runApp(BMICalculator());
 
 class BMICalculator extends StatelessWidget {
@@ -18,6 +21,7 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +35,19 @@ class _InputPageState extends State<InputPage> {
             children: <Widget>[
               Expanded(
                 child: CardReusavel(
-                  cor: Color(0xFF1D1E33),
+                  cor: corAtiva,
                 ),
               ),
               Expanded(
                 child: CardReusavel(
-                  cor: Color(0xFF1D1E33),
+                  cor: corAtiva,
                 ),
               ),
             ],
           )),
           Expanded(
             child: CardReusavel(
-              cor: Color(0xFF1D1E33),
+              cor: corAtiva,
             ),
           ),
           Expanded(
@@ -51,17 +55,23 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: CardReusavel(
-                    cor: Color(0xFF1D1E33),
+                    cor: corAtiva,
                   ),
                 ),
                 Expanded(
                   child: CardReusavel(
-                    cor: Color(0xFF1D1E33),
+                    cor: corAtiva,
                   ),
                 ),
               ],
             ),
           ),
+          Container(
+            color: corDoPe,
+            margin: EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: 80.0,
+          )
         ],
       ),
     );
@@ -71,7 +81,7 @@ class _InputPageState extends State<InputPage> {
 class CardReusavel extends StatelessWidget {
   CardReusavel({@required this.cor});
 
-  Color cor;
+  final Color cor;
 
   @override
   Widget build(BuildContext context) {
