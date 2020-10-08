@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'conteudo_icone.dart';
+import 'card_reusavel.dart';
 
 const corAtiva = Color(0xFF1D1E33);
+const corInativa = Color(0xFF111328);
 const corDoPe = Color(0xFFEB1555);
+
+enum Genero {
+  masculino,
+  feminino
+}
 
 
 class InputPage extends StatefulWidget {
@@ -11,6 +19,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+
+  Genero generoEscolhido;
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +35,34 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: CardReusavel(
-                      cor: corAtiva,
-                      cardChild: colunaCard(
-                          icone: FontAwesomeIcons.mars,
-                          texto: 'MASCULINO',
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          generoEscolhido = Genero.masculino;
+                        });
+                      },
+                      child: CardReusavel(
+                        cor: generoEscolhido == Genero.masculino ? corAtiva : corInativa,
+                        cardChild: conteudoIcones(
+                            icone: FontAwesomeIcons.mars,
+                            texto: 'MASCULINO',
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: CardReusavel(
-                      cor: corAtiva,
-                      cardChild: colunaCard(
-                        icone: FontAwesomeIcons.venus,
-                        texto: 'FEMININO',
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          generoEscolhido = Genero.feminino;
+                        });
+                      },
+                      child: CardReusavel(
+                        cor: generoEscolhido == Genero.feminino ? corAtiva : corInativa,
+                        cardChild: conteudoIcones(
+                          icone: FontAwesomeIcons.venus,
+                          texto: 'FEMININO',
+                        ),
                       ),
                     ),
                   ),
@@ -72,57 +97,6 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
-    );
-  }
-}
-
-class colunaCard extends StatelessWidget {
-  colunaCard({this.icone, this.texto});
-
-  final IconData icone;
-  final String texto;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(
-          icone,
-          size: 80.0,
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Text(
-          texto, style: TextStyle(
-            fontSize: 18.0,
-            color: Color(0Xff8d8e98)
-        ),
-        ),
-      ],
-    );
-  }
-
-
-}
-
-class CardReusavel extends StatelessWidget {
-  CardReusavel({@required this.cor, this.cardChild});
-
-  final Widget cardChild;
-  final Color cor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: cardChild,
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: cor,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-
     );
   }
 }
