@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'constant.dart';
 
-const estiloTexto = TextStyle(fontSize: 18.0,color: Color(0Xff8d8e98));
 
 class conteudoIcones extends StatelessWidget {
   conteudoIcones({this.icone, this.texto});
@@ -22,7 +22,7 @@ class conteudoIcones extends StatelessWidget {
         ),
         Text(
           texto,
-          style: estiloTexto,
+          style: kEstiloTexto,
         ),
       ],
     );
