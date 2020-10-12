@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'conteudo_icone.dart';
@@ -20,6 +21,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
 
   Genero generoEscolhido;
+  int altura = 176;
+  int peso = 75;
 
 
   @override
@@ -67,8 +70,44 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             child: CardReusavel(
               cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Altura', style: kEstiloTexto,),
+                  Text('ALTURA', style: kEstiloTexto),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget> [
+                      Text(
+                        altura.toString(),
+                        style: kEstiloNumeros,
+                      ),
+                      Text(
+                        'cm',
+                        style: kEstiloTexto,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.white,
+                      thumbColor: Color(0xFFEB1555),
+                      overlayColor: Color(0x15EB1555),
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
+                    ),
+                   child: Slider(
+                    value: altura.toDouble(),
+                    min: 120.0,
+                    max: 250.0,
+                    inactiveColor: Color(0xFF8D8E98),
+                    onChanged: (double novoValor) {
+                      setState(() {
+                        altura = novoValor.round();
+                      });
+                    },
+                  ),
+                  ),
                 ],
               ),
               cor: kCorAtiva,
@@ -80,6 +119,33 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: CardReusavel(
                     cor: kCorAtiva,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget> [
+                        Text('PESO', style: kEstiloTexto),
+                        Text(peso.toString(), style: kEstiloNumeros),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget> [
+                            FloatingActionButton(
+                              backgroundColor: Color(0xFF4C4F5E),
+                              child: Icon(
+                                  Icons.add,
+                                color: Colors.white,
+                              ),
+                          ),
+                            SizedBox(width: 10.0),
+                            FloatingActionButton(
+                              backgroundColor: Color(0xFF4C4F5E),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                            ),
+                              ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
