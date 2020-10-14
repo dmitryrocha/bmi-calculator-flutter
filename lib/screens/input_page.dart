@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'conteudo_icone.dart';
-import 'card_reusavel.dart';
-import 'constant.dart';
-
+import '../components/conteudo_icone.dart';
+import '../components/card_reusavel.dart';
+import '../constant.dart';
+import 'resultados.dart';
+import '../components/botao_do_fundo.dart';
+import '../components/round_icon_button.dart';
+import 'package:bmi_calculator/calculadora.dart';
 
 
 enum Genero {
@@ -23,6 +26,7 @@ class _InputPageState extends State<InputPage> {
   Genero generoEscolhido;
   int altura = 176;
   int peso = 75;
+  int idade = 20;
 
 
   @override
@@ -78,6 +82,9 @@ class _InputPageState extends State<InputPage> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: <Widget> [
+                      SizedBox(
+                        width: 30.0,
+                      ),
                       Text(
                         altura.toString(),
                         style: kEstiloNumeros,
@@ -123,25 +130,37 @@ class _InputPageState extends State<InputPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget> [
                         Text('PESO', style: kEstiloTexto),
-                        Text(peso.toString(), style: kEstiloNumeros),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 20.0,
+                              ),
+                              Text(peso.toString(), style: kEstiloNumeros),
+                              Text('kg', style: kEstiloTexto,)
+                        ]),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget> [
-                            FloatingActionButton(
-                              backgroundColor: Color(0xFF4C4F5E),
-                              child: Icon(
-                                  Icons.add,
-                                color: Colors.white,
-                              ),
-                          ),
-                            SizedBox(width: 10.0),
-                            FloatingActionButton(
-                              backgroundColor: Color(0xFF4C4F5E),
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
+                            RoundIconButton(
+                                icone: FontAwesomeIcons.minus,
+                              onPressed: ()  {
+                                  setState(() {
+                                    peso--;
+                                  });
+                              },
                             ),
+                            SizedBox(width: 10.0),
+                            RoundIconButton(
+                                icone: FontAwesomeIcons.plus,
+                              onPressed:() {
+                                  setState(() {
+                                    peso++;
+                                  });
+                              },
+                            )
                               ],
                         ),
                       ],
@@ -151,19 +170,72 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: CardReusavel(
                     cor: kCorAtiva,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget> [
+                        Text('IDADE', style: kEstiloTexto),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 40.0,
+                              ),
+                              Text(idade.toString(), style: kEstiloNumeros),
+                              Text('anos', style: kEstiloTexto,)
+                            ]),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget> [
+                            RoundIconButton(
+                              icone: FontAwesomeIcons.minus,
+                              onPressed: ()  {
+                                setState(() {
+                                  idade--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            RoundIconButton(
+                              icone: FontAwesomeIcons.plus,
+                              onPressed:() {
+                                setState(() {
+                                  idade++;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: kCorDoPe,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: 80.0,
-          )
+          BotaoDoFundo(
+            textoBotao: 'CALCULAR',
+            onTap: () {
+              Calculadora calc = Calculadora(altura: altura, peso: peso);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  Resultados(
+                        imcResultado: calc.calcularIMC(),
+                        imcTexto: calc.getResultadoTexto(),
+                        imcInterpretado: calc.getInterpretacao(),
+                      ),
+                  ),
+              );
+          },
+          ),
         ],
       ),
     );
   }
 }
+
+
+
+
